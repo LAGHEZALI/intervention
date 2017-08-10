@@ -1,0 +1,25 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<p-confirmDialog acceptLabel="Oui" rejectLabel="Non" width="600"></p-confirmDialog>
+
+<div class="profile">
+  <div class="avatar">
+    <img src="{{logoUrl}}">
+  </div>
+
+  <h4>{{msgLogo}}</h4>
+  <p></p>
+  <form [formGroup]="pseudoForm">
+  <input formControlName="pseudo" class="w3-center" placeholder="Pseudo">
+  <div class="ui-message ui-messages-error ui-corner-all w3-round-xlarge" *ngIf="!pseudoForm.controls['pseudo'].valid&&pseudoForm.controls['pseudo'].dirty">
+    <i class="fa fa-close"></i>
+    <span *ngIf="pseudoForm.controls['pseudo'].errors['required']">Le champs est vide</span>
+    <span *ngIf="pseudoForm.controls['pseudo'].errors['minlength']">Pseudo doit contenir au moins 5 caractères</span>
+  </div>
+  </form>
+  <br>
+  <button (click)="verifPseudo()" class="w3-btn w3-block w3-ripple w3-xlarge w3-round-xxlarge" pButton type="button" icon="fa-chevron-circle-right fa-2x" iconPos="right" [disabled]="!pseudoForm.valid||isLoading" label="Suivant"></button>
+
+</div>
+
+<a href="/inscription">Vous ne disposez pas de compte ? Inscrivez vous</a>

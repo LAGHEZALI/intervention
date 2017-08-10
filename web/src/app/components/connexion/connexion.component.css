@@ -1,0 +1,28 @@
+.container{
+  width: 100%;
+  height: 100%;
+}
+
+.logo {
+  width: 10%;
+  float: left;
+}
+
+.header {
+  margin: 0% 3% 0% 3%;
+}
+
+.title {
+  color: #00569f;
+}
+
+.step-container {
+  position: relative;
+  top: -12%;
+  width: 80%;
+  margin: auto;
+}
+
+.etape {
+  margin-top: 3%;
+}

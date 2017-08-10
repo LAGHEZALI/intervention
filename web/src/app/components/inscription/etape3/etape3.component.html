@@ -1,0 +1,38 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<p-confirmDialog acceptLabel="Oui" rejectLabel="Non" width="500"></p-confirmDialog>
+
+<div class="w3-display-container">
+
+  <p-panel header="Remplissez ces champs pour passer à l'étape suivante" [style]="{'width':'50%','margin':'auto'}">
+
+    <form [formGroup]="persoForm">
+
+      <div class="ui-inputgroup w3-margin ">
+        <span class="ui-inputgroup-addon"><i class="fa fa-user fa-2x"></i></span>
+        <input formControlName="nom" class="w3-large wiii" type="text" pInputText placeholder="Votre nom">
+      </div>
+      <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!persoForm.controls['nom'].valid&&persoForm.controls['nom'].dirty">
+        <i class="fa fa-close"></i>
+        <span *ngIf="persoForm.controls['nom'].errors['required']">Nom est obligatoire</span>
+      </div>
+
+      <div class="ui-inputgroup w3-margin">
+        <span class="ui-inputgroup-addon"><i class="fa fa-key fa-2x"></i></span>
+        <input formControlName="prenom" class="w3-large wiii" placeholder="Votre Prénom" pInputText type="text" />
+      </div>
+      <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!persoForm.controls['prenom'].valid&&persoForm.controls['prenom'].dirty">
+        <i class="fa fa-close"></i>
+        <span *ngIf="persoForm.controls['prenom'].errors['required']">Prénom obligatoire</span>
+      </div>
+
+    </form>
+
+  </p-panel>
+
+  <div class="w3-display-container footer">
+    <button routerLink="/" class="w3-display-left ui-button-danger w3-button" icon="fa-times-circle-o" pButton type="button" label="Annuler"></button>
+    <button (click)="suivant()" *ngIf="persoForm.valid" class="w3-display-right ui-button-primary w3-button" icon="fa-arrow-right" pButton type="button" label="Suivant"></button>
+  </div>
+
+</div>

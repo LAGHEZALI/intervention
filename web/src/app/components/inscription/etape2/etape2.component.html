@@ -1,0 +1,64 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<p-confirmDialog acceptLabel="Oui" rejectLabel="Non" width="500"></p-confirmDialog>
+
+<div id="overlay">
+  <div id="text">
+    <img src="../../../../assets/images/snrt-loading.gif" width="200">
+    <h2>Vérification du Pseudo en cours</h2>
+  </div>
+</div>
+
+<p-blockUI [target]="block" [blocked]="etapeOk">
+  <i class="fa fa-lock fa-5x" style="position:absolute;top:25%;left:50%"></i>
+</p-blockUI>
+
+<div class="w3-display-container">
+
+  <p-panel #block header="Remplissez ces champs pour passer à l'étape suivante" [style]="{'width':'50%','margin':'auto'}">
+
+  <form [formGroup]="compteForm">
+    <div class="ui-inputgroup w3-margin ">
+      <span class="ui-inputgroup-addon"><i class="fa fa-user fa-2x"></i></span>
+      <input formControlName="pseudo" class="w3-large wiii" type="text" pInputText placeholder="Pseudo">
+    </div>
+    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!compteForm.controls['pseudo'].valid&&compteForm.controls['pseudo'].dirty">
+      <i class="fa fa-close"></i>
+      <span *ngIf="compteForm.controls['pseudo'].errors['required']">Pseudo obligatoire</span>
+      <span *ngIf="compteForm.controls['pseudo'].errors['minlength']">Pseudo doit contenir au moins 5 caractères</span>
+    </div>
+
+    <div class="ui-inputgroup w3-margin">
+      <span class="ui-inputgroup-addon"><i class="fa fa-key fa-2x"></i></span>
+      <input formControlName="mdp" class="w3-large wiii" placeholder="Mot de Passe" type="password" pPassword
+             promptLabel="Saisssez votre mot passe"
+             weakLabel="Trop Faible ! Rajoutez quelques choses"
+             mediumLabel="Moyen ! Vous pouvez faire mieux"
+             strongLabel="Fort ! C'est Bon" />
+    </div>
+    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!compteForm.controls['mdp'].valid&&compteForm.controls['mdp'].dirty">
+      <i class="fa fa-close"></i>
+      <span *ngIf="compteForm.controls['mdp'].errors['required']">Mot de passe obligatoire</span>
+      <span *ngIf="compteForm.controls['mdp'].errors['minlength']">Mot de passe doit contenir au moins 8 caractères</span>
+    </div>
+
+    <div *ngIf="estConsultant()" class="ui-inputgroup w3-margin">
+      <span class="ui-inputgroup-addon"><i class="fa fa-briefcase fa-2x"></i></span>
+      <input formControlName="societe" class="w3-large wiii" type="text" pInputText placeholder="Votre Société">
+    </div>
+    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="estConsultant()&&!compteForm.controls['societe'].valid&&compteForm.controls['societe'].dirty">
+      <i class="fa fa-close"></i>
+      <span *ngIf="compteForm.controls['societe'].errors['required']">Nom de la Société est obligatoire</span>
+    </div>
+
+  </form>
+
+  </p-panel>
+
+  <div class="w3-display-container footer">
+    <button routerLink="/" class="w3-display-left ui-button-danger w3-button" icon="fa-times-circle-o" pButton type="button" label="Annuler"></button>
+    <button (click)="verifPseudo()" *ngIf="compteForm.valid&&!etapeOk" class="w3-display-middle ui-button-info w3-button" icon="fa-check-circle-o" pButton type="button" label="Verifier si ce pseudo est libre"></button>
+    <button (click)="suivant()" *ngIf="etapeOk" class="w3-display-right ui-button-primary w3-button" icon="fa-arrow-right" pButton type="button" label="Suivant"></button>
+  </div>
+
+</div>

@@ -1,0 +1,55 @@
+
+body {
+  font-family: 'Open Sans', Geneva, Tahoma, Verdana, sans-serif;
+  text-align: center;
+  margin: 30px;
+}
+
+h4, .button{
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.logo>img {
+  height: 3em;
+  text-align: center;
+  height: 48px;
+}
+
+.avatar>img {
+  height: 125px;
+  width: 125px;
+}
+
+.button {
+  background: #4B8DF9;
+  height: 34px;
+  display: block;
+  width: 100%;
+  padding: 15px 10px 0px 10px;
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  border-radius: 3px;
+  height: 44px;
+  border: 1px solid #aaa;
+  background-color: #ffffff;
+  margin-bottom: 15px;
+  text-align: left;
+  padding: 0 10px 0 10px;
+
+}
+
+.profile {
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  border: 1px solid #aaa;
+  height: 100%;
+  width: 35%;
+  background-color: #fff;
+  padding: 45px;
+  margin-left: auto ;
+  margin-right: auto ;
+  margin-bottom: 30px;
+}

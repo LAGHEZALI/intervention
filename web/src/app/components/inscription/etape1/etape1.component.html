@@ -1,0 +1,34 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<p-confirmDialog acceptLabel="Oui" rejectLabel="Non" width="500"></p-confirmDialog>
+
+<div id="overlay">
+  <div id="text">
+    <img src="../../../../assets/images/snrt-loading.gif" width="200">
+    <h2>Vérification du Code en cours</h2>
+  </div>
+</div>
+
+<p-blockUI [target]="pnl" [blocked]="codeOk">
+  <i class="fa fa-lock fa-5x" style="position:absolute;top:25%;left:50%"></i>
+</p-blockUI>
+
+<div class="w3-display-container">
+
+  <p-panel #pnl header="Choisissez votre type de compte" [style]="{'margin-top':'20px'}">
+
+    <p-selectButton [options]="types" [(ngModel)]="selectedType"></p-selectButton>
+
+    <div *ngIf="selectedType" class="div1">
+      <p-inputMask placeholder="Code de Confirmation" [(ngModel)]="code" autoClear="true" mask="***-***-***" ></p-inputMask>
+      <button (click)="verifierBtn()" class="verif ui-button-info w3-button w3-large" icon="fa-check-circle-o" pButton type="button" label="Verifier le code"></button>
+    </div>
+
+  </p-panel>
+
+  <div class="w3-display-container footer">
+    <button routerLink="/" class="w3-display-left ui-button-danger w3-button" icon="fa-times-circle-o" pButton type="button" label="Annuler"></button>
+    <button (click)="suivant()" *ngIf="codeOk"  class="w3-display-right ui-button-primary w3-button" icon="fa-arrow-right" pButton type="button" label="Suivant"></button>
+  </div>
+
+</div>

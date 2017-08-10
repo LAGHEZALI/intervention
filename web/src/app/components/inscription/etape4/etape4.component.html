@@ -1,0 +1,45 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<p-confirmDialog acceptLabel="Oui" rejectLabel="Non" width="500"></p-confirmDialog>
+
+<div id="overlay">
+  <div id="text">
+    <img src="../../../../assets/images/snrt-loading.gif" width="200">
+    <h1>Création de votre Compte en Cours</h1>
+  </div>
+</div>
+
+
+<div class="w3-display-container">
+
+  <p-panel header="Verifier vos information puis valider votre inscription" [style]="{'width':'50%','margin':'auto'}">
+
+    <div class="w3-container w3-row">
+      <h4 class="w3-col l6 m6 s12"><i>Nom</i></h4><h4 class="w3-col l6 m6 s12">{{nom}}</h4>
+    </div>
+    <div class="w3-container w3-row">
+      <h4 class="w3-col l6 m6 s12"><i>Prénom</i></h4><h4 class="w3-col l6 m6 s12">{{prenom}}</h4>
+    </div>
+    <div class="w3-container w3-row">
+      <h4 class="w3-col l6 m6 s12"><i>Type de Compte</i></h4><h4 class="w3-col l6 m6 s12">{{prettyType}}</h4>
+    </div>
+    <div class="w3-container w3-row">
+      <h4 class="w3-col l6 m6 s12"><i>Pseudo</i></h4><h4 class="w3-col l6 m6 s12">{{pseudo}}</h4>
+    </div>
+    <div *ngIf="!verifSociete()" class="w3-container w3-row">
+      <h4 class="w3-col l6 m6 s12"><i>Société</i></h4><h4 class="w3-col l6 m6 s12">{{societe}}</h4>
+    </div>
+
+  </p-panel>
+
+  <div *ngIf="!etapeOk" class="w3-display-container footer">
+    <button routerLink="/" class="w3-display-left ui-button-danger w3-button" icon="fa-times-circle-o" pButton type="button" label="Annuler"></button>
+    <button (click)="terminer()" class="w3-display-right ui-button-success w3-button" icon="fa-arrow-right" pButton type="button" label="Terminer"></button>
+  </div>
+
+  <div *ngIf="etapeOk" class="w3-display-container footer2">
+    <button routerLink="/" class="w3-display-left ui-button-info w3-button" icon="fa-home" pButton type="button" label="Accueil"></button>
+    <button routerLink="/connexion" class="w3-display-right ui-button-info w3-button" icon="fa-sign-in" pButton type="button" label="Se Connecter"></button>
+  </div>
+
+</div>

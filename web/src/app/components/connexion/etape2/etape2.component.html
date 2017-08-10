@@ -1,0 +1,25 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<p-confirmDialog acceptLabel="Oui" rejectLabel="Non" width="600"></p-confirmDialog>
+
+<div class="profile">
+  <div class="avatar">
+    <img src="../../../../assets/images/snrt-logo-no-text.png">
+  </div>
+
+  <h4>{{msgLogo}}</h4>
+  <p></p>
+  <form [formGroup]="mdpForm">
+    <input formControlName="mdp" class="w3-center" type="password" placeholder="Mot de passe">
+    <div class="ui-message ui-messages-error ui-corner-all w3-round-xlarge" *ngIf="!mdpForm.controls['mdp'].valid&&mdpForm.controls['mdp'].dirty">
+      <i class="fa fa-close"></i>
+      <span *ngIf="mdpForm.controls['mdp'].errors['required']">Le champs est vide</span>
+      <span *ngIf="mdpForm.controls['mdp'].errors['minlength']">Le mot de passe doit contenir au moins 8 caractères</span>
+    </div>
+  </form>
+  <br>
+  <button (click)="verifMdp()" class="w3-btn w3-block w3-ripple w3-xlarge w3-round-xxlarge" pButton type="button" icon="fa-check fa-2x" iconPos="right" [disabled]="!mdpForm.valid" label="Terminer"></button>
+
+</div>
+
+<a href="/connexion">S'identifiez avec un autre Pseudo ?</a>

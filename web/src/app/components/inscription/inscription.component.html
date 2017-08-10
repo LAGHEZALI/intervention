@@ -1,0 +1,19 @@
+<div class="w3-row container w3-center">
+
+  <div class="w3-col l12 m12 s12 header" >
+    <img routerLink="/" style="cursor: pointer" src="../../../assets/images/snrt-logo.png" alt="Lights" class="w3-image logo">
+  </div>
+
+  <div class="step-container">
+    <h1 class="title w3-xxxlarge">Inscription</h1>
+
+    <p-steps [model]="items" styleClass="steps-custom" [(activeIndex)]="activeStep"  [readonly]="true" ></p-steps>
+
+    <div class="etape" >
+
+      <router-outlet></router-outlet>
+
+    </div>
+
+  </div>
+</div>
