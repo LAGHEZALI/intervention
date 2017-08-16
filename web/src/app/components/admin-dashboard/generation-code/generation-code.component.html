@@ -1,0 +1,27 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<p-blockUI [target]="pnl" [blocked]="generatedCode">
+  <i class="fa fa-lock fa-5x" style="position:absolute;top:25%;left:50%"></i>
+</p-blockUI>
+
+<div class="w3-display-container w3-center">
+
+  <p-panel #pnl header="Choisissez le type de compte" [style]="{'margin-top':'20px'}">
+
+    <p-selectButton [options]="types" [(ngModel)]="selectedType"></p-selectButton>
+
+    <div *ngIf="selectedType" class="div1">
+      <button (click)="generer()" class="verif ui-button-info w3-button w3-large" icon="fa-check-circle-o"
+              pButton type="button" label="Générer le code">
+      </button>
+    </div>
+
+  </p-panel>
+
+  <div *ngIf="generatedCode" class="ui-inputgroup div2 w3-center w3-xlarge">
+    <button class="w3-center" (click)="copier()" pButton type="button" icon="fa-clipboard" class="ui-button-primary"></button>
+    <input id="codeInput" class="w3-center" [(ngModel)]="generatedCode" pInputText type="text" placeholder="Code" readonly>
+    <button class="w3-center" (click)="reset()" pButton type="button" icon="fa-refresh" class="ui-button-primary"></button>
+  </div>
+
+</div>

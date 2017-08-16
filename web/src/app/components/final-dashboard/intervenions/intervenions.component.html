@@ -1,0 +1,107 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<h1 class="first">Gestion des Interventions</h1>
+
+<div class="w3-margin">
+  <div class="ui-inputgroup">
+    <button (click)="refresh()" pButton type="button" icon="fa-refresh" class="ui-button-primary w3-xlarge"></button>
+    <input class="w3-xlarge w3-block" #gb type="text" pInputText  placeholder="Recherche Globale">
+  </div>
+</div>
+
+<p-dataTable [value]="interventions" selectionMode="single" [(selection)]="selectedIntervention"
+             (onRowSelect)="onRowSelect($event)" [responsive]="true" [globalFilter]="gb" #dt
+             [rows]="10" [paginator]="true" [rowsPerPageOptions]="[5,10,20]" >
+  <p-header>Liste des Interventions</p-header>
+
+  <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Filtrer" [sortable]="true"></p-column>
+
+  <p-column field="versionDoc" header="Version Doc" [filter]="true" filterPlaceholder="Filtrer" [sortable]="true"></p-column>
+
+  <p-column field="etapeNom" header="Etape actuelle" [sortable]="true" [filter]="true" filterMatchMode="equals">
+    <ng-template pTemplate="filter" let-col>
+      <p-dropdown [options]="etapesTable" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+    </ng-template>
+
+  </p-column>
+
+  <p-column field="moduleNom" header="Module" [filter]="true" filterPlaceholder="Filtrer" [sortable]="true"></p-column>
+
+  <p-column field="dateDerniereMaj" header="Date Dernière Maj" [filter]="true" filterPlaceholder="Filtrer" [sortable]="true"></p-column>
+
+  <p-footer>
+    <div class="ui-helper-clearfix" style="width:100%">
+      <button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Ajouter"></button>
+    </div>
+  </p-footer>
+</p-dataTable>
+
+<p-dialog header="Ajouter une Intervention" [(visible)]="displayAddDialog" [responsive]="true" showEffect="fade" [modal]="true">
+
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="intervention">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid w3-margin dinamicDiv" *ngIf="intervention">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4"><label for="type">Type</label></div>
+        <div class="ui-grid-col-8">
+          <p-dropdown id="type" [options]="modulesAdd" [(ngModel)]="selectedModule" [style]="{'width':'200px'}" filter="filter">
+            <ng-template let-intervention pTemplate="item">
+              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <div style="font-size:14px;float:right;margin-top:4px">{{intervention.label}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-grid-row w3-margin">
+      <div class="ui-grid-col-4"><label for="versionDoc">Version Doc </label></div>
+      <div class="ui-grid-col-8"><input pInputText id="versionDoc" [(ngModel)]="intervention.versionDoc" /></div>
+    </div>
+
+  </div>
+
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa-close" (click)="annuler()" label="Annuler"></button>
+      <button type="button" pButton icon="fa-check" (click)="save()" label="Ajouter"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Modifier ou Supprimer une Intervention" [(visible)]="displayEditDialog" [responsive]="true" showEffect="fade" [modal]="true">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="intervention">
+
+    <div class="ui-grid ui-grid-responsive ui-fluid w3-margin dinamicDiv" *ngIf="intervention">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-4"><label for="type1">Type</label></div>
+        <div class="ui-grid-col-8">
+          <p-dropdown id="type1" [options]="modulesAdd" [(ngModel)]="intervention.moduleId" [style]="{'width':'200px'}" filter="filter">
+            <ng-template let-intervention pTemplate="item">
+              <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <div style="font-size:14px;float:right;margin-top:4px">{{intervention.label}}</div>
+              </div>
+            </ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-grid-row w3-margin">
+      <div class="ui-grid-col-4"><label for="versionDoc">Version Doc </label></div>
+      <div class="ui-grid-col-8"><input pInputText id="versionDoc" [(ngModel)]="intervention.versionDoc" /></div>
+    </div>
+
+  </div>
+
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa-plus-circle" (click)="annuler()" label="Annuler"></button>
+      <button type="button" pButton class="ui-button-danger" icon="fa-trash-o" (click)="delete()" label="Supprimer"></button>
+      <button type="button" pButton class="ui-button-success" icon="fa-pencil" (click)="update()" label="Modifier"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+

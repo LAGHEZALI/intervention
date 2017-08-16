@@ -1,0 +1,31 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<h1 class="first">Liste de Codes d'inscription</h1>
+
+<div class="w3-margin">
+  <div class="ui-inputgroup">
+    <button (click)="refresh()" pButton type="button" icon="fa-refresh" class="ui-button-primary w3-xlarge"></button>
+    <input class="w3-xlarge w3-block" #gb type="text" pInputText  placeholder="Recherche Globale">
+  </div>
+</div>
+
+
+<p-dataTable [value]="codes" selectionMode="single" [(selection)]="selectedCodeInscription" [contextMenu]="cm"
+             [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]"
+             [globalFilter]="gb" #dt [responsive]="true">
+  <p-column field="id" header="Id" [filter]="true" filterPlaceholder="Filtrer" [sortable]="true"></p-column>
+  <p-column field="code" header="Code" [filter]="true" filterPlaceholder="Filtrer" [sortable]="true"></p-column>
+  <p-column field="type" header="Type compte" [sortable]="true" [filter]="true" filterMatchMode="equals">
+    <ng-template pTemplate="filter" let-col>
+      <p-dropdown [options]="types" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-dropdown>
+    </ng-template>
+  </p-column>
+  <p-column field="dateCreation" header="Date de création" [filter]="true" filterPlaceholder="Filtrer" [sortable]="true"></p-column>
+  <p-column field="dateUtilisation" header="Date Utilisation" [filter]="true" filterPlaceholder="Filtrer" [sortable]="true"></p-column>
+
+</p-dataTable>
+
+<p-contextMenu #cm [model]="items"></p-contextMenu>
+
+<input style="opacity: 0" id="clip" [(ngModel)]="selectedCodeInscription.code" type="text" />
+

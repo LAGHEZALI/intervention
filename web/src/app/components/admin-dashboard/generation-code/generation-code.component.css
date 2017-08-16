@@ -1,0 +1,29 @@
+.ui-inputtext {
+  text-align: center
+}
+
+.div1 {
+  margin-top: 3%;
+}
+
+.verif {
+  display: block;
+  margin: auto;
+  margin-top:3%;
+}
+
+.footer {
+  display: block;
+  margin-top:3%;
+}
+
+.ui-blockui{
+  background: #000;
+  z-index: 9;
+}
+
+.div2 {
+  display: block;
+  width: 100%;
+  margin: 5% auto;
+}
