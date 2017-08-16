@@ -13,17 +13,6 @@ public class Systeme {
 
     private String nom;
 
-    @OneToMany(mappedBy = "systeme")
-    private List<Module> modules = new ArrayList<>();
-
-    public List<Module> getModules() {
-        return modules;
-    }
-
-    public void setModules(List<Module> modules) {
-        this.modules = modules;
-    }
-
     public Long getId() {
         return id;
     }

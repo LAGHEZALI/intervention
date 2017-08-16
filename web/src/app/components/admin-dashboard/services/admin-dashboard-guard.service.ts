@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import {CanActivate, CanDeactivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {ConnexionAuthService} from './connexion-auth.service';
+import {UserInfoService} from '../../../shared/services/user-info.service';
 
 export interface CanComponentDeactivate {
   canDeactivate: () => Observable<boolean> | Promise<boolean> | boolean;
 }
 
 @Injectable()
-export class ConnexionGuardService implements CanActivate, CanDeactivate<CanComponentDeactivate> {
+export class AdminDashboardGuardService implements CanActivate, CanDeactivate<CanComponentDeactivate> {
 
   constructor(
-    private connexionAuthService: ConnexionAuthService,
     private router: Router,
+    private userInfoService: UserInfoService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -21,12 +21,9 @@ export class ConnexionGuardService implements CanActivate, CanDeactivate<CanComp
   }
 
   checkPermission(url: string): boolean {
-    if (url === '/connexion/etape2') {
-      if (this.connexionAuthService.etape2) { return true; }
-    }
 
-    // Store the attempted URL for redirecting
-    this.connexionAuthService.redirectUrl = url;
+    if (this.userInfoService.isConnected()) { return true; }
+
     //  if the i dont have permission -> redirect to connexion
     this.router.navigate(['/connexion']);
     return false;

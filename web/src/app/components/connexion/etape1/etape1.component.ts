@@ -14,8 +14,9 @@ import {ConnexionInfoService} from '../services/connexion-info.service';
 export class Etape1Component implements OnInit {
 
   msgs: Message[] = [];
+  urlImg = '../../../../assets/images/snrt-logo-no-text.png';
+  urlGif = '../../../../assets/images/snrt-loading-fast.gif';
   pseudoForm: FormGroup;
-  logoUrl = '../../../../assets/images/snrt-logo-no-text.png';
   msgLogo = 'Identifiez-vous';
   isLoading = false;
   etapeOk = false;
@@ -36,6 +37,7 @@ export class Etape1Component implements OnInit {
   }
 
   verifPseudo() {
+    this.isLoading = true;
     this.on();
     this.connexionService.verifPseudo(this.pseudoForm.get('pseudo').value)
       .subscribe(
@@ -46,7 +48,9 @@ export class Etape1Component implements OnInit {
 
   evalReponseVerif(rep) {
     if (rep) {
-      this.connexionInfoService.setUser(rep);
+      this.connexionInfoService.setId(rep.id);
+      this.connexionInfoService.setmdp(rep.mdp);
+      this.connexionInfoService.setType(rep.type);
       this.etapeOk = true;
       this.connexionAuthService.setEtape2(true);
       this.router.navigate(['/connexion/etape2']);
@@ -64,13 +68,10 @@ export class Etape1Component implements OnInit {
   }
 
   on() {
-    this.logoUrl = '../../../../assets/images/snrt-loading-fast.gif';
-    this.isLoading = true;
     this.msgLogo = 'Vérification du Pseudo... Patientez SVP';
   }
 
   off() {
-    this.logoUrl = '../../../../assets/images/snrt-logo-no-text.png';
     this.isLoading = false;
     this.msgLogo = 'Identifiez-vous';
   }

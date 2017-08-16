@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {ConfirmationService, Message} from 'primeng/primeng';
 import {Router} from '@angular/router';
-import {ConnexionService} from '../services/connexion.service';
-import {ConnexionAuthService} from '../services/connexion-auth.service';
 import {ConnexionInfoService} from '../services/connexion-info.service';
+import {UserInfoService} from '../../../shared/services/user-info.service';
 
 @Component({
   selector: 'app-etape2',
@@ -16,16 +15,14 @@ export class Etape2Component implements OnInit {
   msgs: Message[] = [];
   mdpForm: FormGroup;
   msgLogo = 'Confirmez votre identification';
-  isLoading = false;
   etapeOk = false;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private connexionAuthService: ConnexionAuthService,
     private confirmationService: ConfirmationService,
-    private connexionService: ConnexionService,
-    private connexionInfoService: ConnexionInfoService
+    private connexionInfoService: ConnexionInfoService,
+    private userInfoService: UserInfoService
   ) { }
 
   ngOnInit() {
@@ -36,10 +33,13 @@ export class Etape2Component implements OnInit {
 
   verifMdp() {
     const reelMdp = this.mdpForm.get('mdp').value;
-    const potentialMdp = this.connexionInfoService.getUser().mdp;
+    const potentialMdp = this.connexionInfoService.getmdp();
     if (reelMdp === potentialMdp) {
+      const id = this.connexionInfoService.getId();
+      const type = this.connexionInfoService.getType();
       this.etapeOk = true;
-      this.router.navigate(['/']);
+      this.connexionInfoService.clearUser();
+      this.userInfoService.connect(id , type);
     } else {
       this.mdpForm.get('mdp').setValue('');
       this.showPopUpsCodeNonOk();

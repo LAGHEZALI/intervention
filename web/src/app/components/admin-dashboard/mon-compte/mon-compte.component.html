@@ -1,0 +1,127 @@
+<div *ngIf="loadingOk">
+
+  <p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+  <p-confirmDialog acceptLabel="Sauvegarder" rejectLabel="Annuler les changements" width="600"></p-confirmDialog>
+
+  <div class="w3-container w3-margin-bottom w3-margin w3-center">
+    <div class="w3-col l6 m6 s12" >
+      <button pButton type="button" [disabled]="!compteForm.valid" (click)="sauvegarder()" icon="fa-floppy-o" label="Sauvegarder les changements actuels"></button>
+    </div>
+    <div class="w3-col l6 m6 s12" >
+      <button pButton type="button" (click)="restaurer()" icon="fa-repeat" label="Restaurer depuis la dernière sauvegarde"></button>
+    </div>
+  </div>
+
+  <div class="w3-container w3-row w3-card-2 w3-white w3-margin-bottom">
+    <h4 class="w3-text-grey w3-padding-16 w3-col l6 m6 s12">
+      <i style="color: #4c6a92" class="fa fa-users fa-fw w3-margin-right w3-xxlarge"></i>
+      Type de Compte
+    </h4>
+    <h4 class="w3-text-dark-gray w3-padding-16 w3-col l6 m6 s12">
+          <span style="margin-left:8px">Utilisateur Final</span>
+    </h4>
+  </div>
+
+  <form [formGroup]="compteForm">
+
+    <!-------------------- NOM ---------------------->
+
+    <div class="w3-row w3-card-2 w3-margin-bottom">
+      <div class="w3-container  w3-row">
+        <h4 class="w3-text-grey w3-padding-16 w3-col l6 m6 s12">
+          <i style="color: #4c6a92" class="fa fa-address-card  fa-fw w3-margin-right w3-xxlarge"></i>
+          Nom
+        </h4>
+        <h4 class="w3-text-dark-gray w3-padding-16 w3-col l6 m6 s12">
+          <p-inplace closable="closable">
+          <span pInplaceDisplay>
+              <span class="fa fa-pencil"></span><span style="margin-left:8px">{{compteForm.controls['nom'].value}}</span>
+          </span>
+            <span pInplaceContent>
+              <input formControlName="nom" type="text" pInputText>
+          </span>
+          </p-inplace>
+        </h4>
+      </div>
+      <div class="error w3-red w3-round-xlarge w3-center w3-margin-bottom" *ngIf="!compteForm.controls['nom'].valid&&compteForm.controls['nom'].dirty">
+        <span *ngIf="compteForm.controls['nom'].errors['required']">Le champs est vide</span>
+      </div>
+    </div>
+
+    <!-------------------- PRENOM ---------------------->
+
+    <div class="w3-row w3-card-2 w3-margin-bottom">
+      <div class="w3-container  w3-row">
+        <h4 class="w3-text-grey w3-padding-16 w3-col l6 m6 s12">
+          <i style="color: #4c6a92" class="fa fa-address-card  fa-fw w3-margin-right w3-xxlarge"></i>
+          Prénom
+        </h4>
+        <h4 class="w3-text-dark-gray w3-padding-16 w3-col l6 m6 s12">
+          <p-inplace closable="closable">
+            <span pInplaceDisplay>
+                <span class="fa fa-pencil"></span><span style="margin-left:8px">{{compteForm.controls['prenom'].value}}</span>
+            </span>
+            <span pInplaceContent>
+                <input formControlName="prenom" type="text" pInputText>
+            </span>
+          </p-inplace>
+        </h4>
+      </div>
+      <div class="error w3-red w3-round-xlarge w3-center w3-margin-bottom" *ngIf="!compteForm.controls['prenom'].valid&&compteForm.controls['prenom'].dirty">
+        <span *ngIf="compteForm.controls['prenom'].errors['required']">Le champs est vide</span>
+      </div>
+    </div>
+
+    <!-------------------- PSEUDO ---------------------->
+
+    <div class="w3-row w3-card-2 w3-margin-bottom">
+      <div class="w3-container w3-row">
+        <h4 class="w3-text-grey w3-padding-16 w3-col l6 m6 s12">
+          <i style="color: #4c6a92" class="fa fa-user-o fa-fw w3-margin-right w3-xxlarge"></i>
+          Pseudo
+        </h4>
+        <h4 class="w3-text-dark-gray w3-padding-16 w3-col l6 m6 s12">
+          <p-inplace closable="closable">
+            <span pInplaceDisplay>
+                <span class="fa fa-pencil"></span><span style="margin-left:8px">{{compteForm.controls['pseudo'].value}}</span>
+            </span>
+            <span pInplaceContent>
+                <input formControlName="pseudo" type="text" pInputText>
+            </span>
+          </p-inplace>
+        </h4>
+      </div>
+      <div class="error w3-red w3-round-xlarge w3-center w3-margin-bottom" *ngIf="!compteForm.controls['pseudo'].valid&&compteForm.controls['pseudo'].dirty">
+        <span *ngIf="compteForm.controls['pseudo'].errors['required']">Le champs est vide</span>
+        <span *ngIf="compteForm.controls['pseudo'].errors['minlength']">Le pseudo doit contenir au moins 8 caractères</span>
+      </div>
+    </div>
+
+    <!-------------------- MDP ---------------------->
+
+    <div class="w3-row w3-card-2 w3-margin-bottom">
+      <div class="w3-container">
+        <h4 class="w3-text-grey w3-padding-16 w3-col l6 m6 s12">
+          <i style="color: #4c6a92" class="fa fa-key fa-fw w3-margin-right w3-xxlarge"></i>
+          Mot de Passe
+        </h4>
+        <h4 class="w3-text-dark-gray w3-padding-16 w3-col l6 m6 s12">
+          <p-inplace closable="closable">
+            <span pInplaceDisplay>
+                <span class="fa fa-pencil"></span><span style="margin-left:8px">***********</span>
+            </span>
+            <span pInplaceContent>
+                <input formControlName="mdp" type="password" pInputText>
+            </span>
+          </p-inplace>
+        </h4>
+      </div>
+      <div class="error w3-red w3-round-xlarge w3-center w3-margin-bottom" *ngIf="!compteForm.controls['mdp'].valid&&compteForm.controls['mdp'].dirty">
+        <span *ngIf="compteForm.controls['mdp'].errors['required']">Le champs est vide</span>
+        <span *ngIf="compteForm.controls['mdp'].errors['minlength']">Le mot de passe doit contenir au moins 8 caractères</span>
+      </div>
+    </div>
+
+  </form>
+</div>

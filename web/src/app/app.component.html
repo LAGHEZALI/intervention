@@ -1,1 +1,14 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="5000"></p-growl>
+
+<div id="overlay">
+  <div id="image">
+    <img  src="../assets/images/snrt-loading.gif" width="300">
+    <div class="w3-container">
+      <h3 class="w3-text-white w3-center"><b>Chargement en Cours...</b></h3>
+    </div>
+  </div>
+</div>
+
+<loading-bar [height]="height" [color]="color" [runInterval]="runInterval"></loading-bar>
+
 <router-outlet></router-outlet>

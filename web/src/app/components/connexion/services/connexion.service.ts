@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {Http, RequestOptions, Headers, Response} from '@angular/http';
+import {Http, Response} from '@angular/http';
 
 @Injectable()
 export class ConnexionService {
@@ -23,6 +23,7 @@ export class ConnexionService {
 
 interface User {
   id: number;
+  type: string;
   nom: string;
   prenom: string;
   pseudo: string;

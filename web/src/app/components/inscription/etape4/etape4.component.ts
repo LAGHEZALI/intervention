@@ -4,6 +4,9 @@ import {ConfirmationService, Message} from 'primeng/primeng';
 import {EtapesInfoService} from '../services/etapes-info.service';
 import {InscriptionService} from '../services/inscription.service';
 
+import {LoadingService} from '../../../shared/services/loading.service';
+
+
 @Component({
   selector: 'app-etape4',
   templateUrl: './etape4.component.html',
@@ -26,7 +29,8 @@ export class Etape4Component implements OnInit {
   constructor(
     private etapesInfoService: EtapesInfoService,
     private inscriptionService: InscriptionService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -39,29 +43,39 @@ export class Etape4Component implements OnInit {
     this.prettyTypes();
   }
 
-  verifSociete() {
-    return this.societe === '';
+  isConsultant() {
+    return ( this.type === 'consultantReel' || this.type === 'consultantEstime');
+  }
+
+  getCurrentUser(): User {
+    return (
+      {
+        id: null,
+        type: this.type,
+        nom: this.nom,
+        prenom: this.prenom,
+        pseudo: this.pseudo,
+        mdp: this.mdp,
+        societe: this.societe
+      }
+    );
   }
 
   terminer() {
-    this.on();
-    const user: User = {id: null, nom: this.nom, prenom: this.prenom, pseudo: this.pseudo, mdp: this.mdp};
-    this.inscriptionService.ajouterUtilisateur(user, this.type, this.societe)
-      .subscribe(
-        rep => this.evalReponse(rep),
-        error => console.log(error)
-      );
-  }
-
-  evalReponse(rep: User) {
-    if (rep) {
-      this.etapeOk = true;
-      this.suivantClick = true;
-      this.showPopUpsInscriptionOk();
-    } else {
-      this.showPopUpsInscriptionNonOk();
-    }
-    this.off();
+    this.loadingService.start();
+    this.inscriptionService.ajouterUtilisateur(this.getCurrentUser()).subscribe(
+      rep => {
+        this.etapeOk = true;
+        this.suivantClick = true;
+        this.loadingService.complete();
+        this.showPopUpsInscriptionOk();
+      },
+      error => {
+        console.log(error);
+        this.loadingService.reset();
+        this.showPopUpsInscriptionNonOk(error);
+      }
+    );
   }
 
   showPopUpsInscriptionOk(): void {
@@ -70,18 +84,10 @@ export class Etape4Component implements OnInit {
     this.msgs.push({severity: 'info', summary: 'Passez à l\'action !', detail: 'Vous pouvez vous connecter désormais'});
   }
 
-  showPopUpsInscriptionNonOk(): void {
+  showPopUpsInscriptionNonOk(error: string): void {
     this.msgs = [];
-    this.msgs.push({severity: 'error', summary: 'Oups !', detail: 'L\'inscription a échoué'});
-    this.msgs.push({severity: 'info', summary: 'Quoi faire ?', detail: 'Recommencez ou contacter La SNRT'});
-  }
-
-  on() {
-    document.getElementById('overlay').style.display = 'block';
-  }
-
-  off() {
-    document.getElementById('overlay').style.display = 'none';
+    this.msgs.push({severity: 'info', summary: 'Oups !', detail: 'L\'inscription a échoué'});
+    this.msgs.push({severity: 'error', summary: 'Erreur !', detail: error});
   }
 
   prettyTypes() {
@@ -116,12 +122,4 @@ export class Etape4Component implements OnInit {
       });
     });
   }
-}
-
-interface User {
-  id: number;
-  nom: string;
-  prenom: string;
-  pseudo: string;
-  mdp: string;
 }

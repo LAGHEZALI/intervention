@@ -26,7 +26,7 @@
     <div class="w3-container w3-row">
       <h4 class="w3-col l6 m6 s12"><i>Pseudo</i></h4><h4 class="w3-col l6 m6 s12">{{pseudo}}</h4>
     </div>
-    <div *ngIf="!verifSociete()" class="w3-container w3-row">
+    <div *ngIf="isConsultant()" class="w3-container w3-row">
       <h4 class="w3-col l6 m6 s12"><i>Société</i></h4><h4 class="w3-col l6 m6 s12">{{societe}}</h4>
     </div>
 

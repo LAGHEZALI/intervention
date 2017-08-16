@@ -3,29 +3,37 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class ConnexionInfoService {
 
-  user: User = null;
+  private id: number = null;
+  private mdp: string = null;
+  private type: string = null;
 
-  constructor() {
-    this.user = null;
+  setId(id: number) {
+    this.id = id;
   }
 
-  setUser(user: User) {
-    this.user = user;
+  getId() {
+    return this.id;
   }
 
-  getUser() {
-    return this.user;
+  setmdp(mdp: string) {
+    this.mdp = mdp;
+  }
+
+  getmdp() {
+    return this.mdp;
+  }
+
+  getType() {
+    return this.type;
+  }
+
+  setType(type: string) {
+    this.type = type;
   }
 
   clearUser() {
-    this.user = null;
+    this.id = null;
+    this.mdp = null;
+    this.type = null;
   }
-}
-
-interface User {
-  id: number;
-  nom: string;
-  prenom: string;
-  pseudo: string;
-  mdp: string;
 }
